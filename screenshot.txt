@@ -1,0 +1,50 @@
+screenshot
+
+package Screenshot;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import javax.imageio.ImageIO;
+import java.util.List;
+//import java.util.Scanner;
+public class SClass {
+	public static void main(String[] args) {
+		System.out.println("Hello");
+		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		//driver.manage().timeouts().implicitlyWait(Duration.ofMinutes(1));
+		//driver.manage().window().maximize();
+		//String url = "https://admissions.ljku.edu.in/";
+		String url = "https://demo.guru99.com/test/guru99home/";
+		driver.get(url);
+		//https://www.guru99.com/handling-iframes-selenium.html
+		List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+		System.out.println("Total frame size: " + iframes.size());
+		driver.switchTo().frame("a077aa5e");
+		System.out.println( " Page Source: \n"+ driver.getPageSource());
+		//Take the screenshot
+		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		//Copy the file to a location and use try catch block to handle exception
+		try {
+		BufferedImage image = ImageIO.read(screenshot);
+		ImageIO.write(image, "PNG", new File("D:\\Screenshot.png"));
+		} catch (IOException e) {
+		System.out.println(e.getMessage());
+		}
+		//https://seleniumbase.io/help_docs/locale_codes/#language-locale-codes
+		ChromeOptions opt = new ChromeOptions();
+		opt.addArguments("--lang=gu");
+		//user agent;
+		opt.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+		+"AppleWebKit/537.36" + "Chrome/87.0.4280.141 Safari/537.36");
+		driver= new ChromeDriver(opt);
+		driver.get("https://www.google.com");
+	}
+}

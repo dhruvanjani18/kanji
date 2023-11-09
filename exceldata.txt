@@ -1,0 +1,85 @@
+exceldata
+
+// link to dowanload excel files : https://www.javatpoint.com/how-to-read-excel-file-in-java
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Iterator;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+public class ReadExcelData {
+@SuppressWarnings("deprecation")
+public static void main(String[] args)
+{
+// TODO Auto-generated method stub
+try
+{
+ChromeOptions options = new ChromeOptions();
+options.addArguments("--remote-allow-origins=*");
+System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
+//String url = "https://www.ljku.edu.in";
+String url = "https://apricot-bendite-7.tiiny.site/";
+ChromeDriver driver = new ChromeDriver(options);
+driver.get(url);
+File file = new File("D:\\employee.xlsx"); //creating a new file instance
+FileInputStream fis = new FileInputStream(file); //obtaining bytes from the file
+//creating Workbook instance that refers to .xlsx file
+XSSFWorkbook wb = new XSSFWorkbook(fis);
+XSSFSheet sheet = wb.getSheetAt(0); //creating a Sheet object to retrieve object
+Iterator<Row> itr = sheet.iterator(); //iterating over excel file
+//while (itr.hasNext())
+//{
+Row row = itr.next();
+Iterator<Cell> cellIterator = row.cellIterator();
+//cellIterator.hasNext();
+//iterating over each colum
+//while (cellIterator.hasNext())
+//{
+Cell cell = cellIterator.next();
+double sr = cell.getNumericCellValue();
+System.out.println(sr);
+cell = cellIterator.next();
+String name = cell.getStringCellValue();
+cell = cellIterator.next();
+String city = cell.getStringCellValue();
+cell = cellIterator.next();
+double age = cell.getNumericCellValue();
+cell = cellIterator.next();
+System.out.println(cell.getStringCellValue());
+boolean married = cell.getStringCellValue().equals("Yes") ? true : false ;
+WebElement elmname = driver.findElement(By.id("txtName"));
+elmname.sendKeys(name);
+WebElement elmcity = driver.findElement(By.id("txtCity"));
+elmcity.sendKeys(city);
+WebElement elmage = driver.findElement(By.id("txtAge"));
+elmage.sendKeys(String.valueOf(age));
+WebElement elmarried = driver.findElement(By.id("chkMarried"));
+if(married) {
+elmarried.click();
+}
+driver.findElement(By.id("btnSave")).click();
+/*switch (cell.getCellType())
+{
+case Cell.CELL_TYPE_STRING: //field that represents string cell type
+System.out.print(cell.getStringCellValue() + "\t\t\t");
+break;
+case Cell.CELL_TYPE_NUMERIC: //field that represents number cell type
+System.out.print(cell.getNumericCellValue() + "\t\t\t");
+break;
+default:
+} */
+//}
+//System.out.println("");
+// }
+}
+catch(Exception e)
+{
+e.printStackTrace();
+}
+}
+}

@@ -1,0 +1,14 @@
+navigation
+
+System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
+String url = "https://www.ljku.edu.in";
+ChromeDriver driver = new ChromeDriver();
+driver.navigate().to(url);
+System.out.println("Title: "+driver.getTitle());
+WebElement obj = driver.findElement(By.linkText("Ph.D.@LJ"));
+obj.click();
+System.out.println("After moving to LjKU Career: "+driver.getTitle());
+driver.navigate().back();
+driver.navigate().refresh();
+driver.navigate().forward();
+driver.quit();

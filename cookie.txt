@@ -1,0 +1,56 @@
+cookie
+
+package CookiePackage;
+import java.util.Set;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.util.Scanner;
+public class CClass {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\Software testing\\chromedriver_win32 (1)\\chromedriver.exe");
+		String url = "https://www.ljku.edu.in";
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--remote-allow-origins=*");
+		ChromeDriver driver = new ChromeDriver(options);
+		driver.get(url);
+		Cookie myCookie = new Cookie("name1","ABC1","/");
+		//myCookie = new Cookie()
+		driver.manage().addCookie(myCookie);
+		Cookie e = driver.manage().getCookieNamed("name1");
+		System.out.println("Name : " +e.getName()+ "\tValue: "+e.getValue() +
+		"\tDomain: "+e.getDomain() +"\tExpire: "+e.getExpiry());
+		Scanner read = new Scanner(System.in);
+		System.out.println("Enter the name of cookie: ");
+		String name = read.next();
+		//read.close();
+		System.out.println("Enter the value of "+ name + " cookie: ");
+		String value = read.next();
+		//read.close();
+		Cookie userCookie = new Cookie(name,value,"/");
+		driver.manage().addCookie(userCookie);
+		Set<Cookie> allCookies = driver.manage().getCookies();
+		System.out.println("All Cookies: " + allCookies);
+		for (Cookie each : allCookies) {
+		System.out.println("Name : " +each.getName()+ "\tValue: "+each.getValue()+
+		"\tDomain: "+each.getDomain() +"\tExpire: "+each.getExpiry());
+		}
+		driver.manage().deleteCookieNamed("name1");
+		allCookies = driver.manage().getCookies();
+		System.out.println("All Cookies: " + allCookies);
+		for (Cookie each : allCookies) {
+		System.out.println("Name : " +each.getName()+ "\tValue: "+each.getValue()+
+		"\tDomain: "+each.getDomain() +"\tExpire: "+each.getExpiry());
+		}
+		driver.manage().deleteAllCookies();
+		allCookies = driver.manage().getCookies();
+		System.out.println("All Cookies: " + allCookies);
+		for (Cookie each : allCookies) {
+		System.out.println("Name : " +each.getName()+ "\tValue: "+each.getValue()+
+		"\tDomain: "+each.getDomain() +"\tExpire: "+each.getExpiry());
+		}
+		//driver.quit();
+		read.close();
+	}
+}

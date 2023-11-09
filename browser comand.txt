@@ -1,0 +1,17 @@
+browser comand
+
+System.out.println("Hello");
+System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
+String url = "";
+url = "https://www.google.co.in";
+ChromeDriver driver = new ChromeDriver();
+driver.get(url);
+String title = driver.getTitle();
+System.out.println("Title: " + title + "\nTitle length: "+ title.length());
+String currentUrl= driver.getCurrentUrl();
+System.out.println("Current Url: " + currentUrl);
+String pageSource = driver.getPageSource();
+System.out.println("Current Page Source: ");
+System.out.println(pageSource);
+System.out.println("Page Source Length: "+pageSource.length());
+driver.quit();

@@ -1,0 +1,41 @@
+webelement
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
+ChromeDriver driver = new ChromeDriver();
+String url = "https://admissions.ljku.edu.in/";
+driver.get(url);
+WebElement name = driver.findElement(By.id("Name"));
+name.sendKeys("Xyz");
+String value = name.getAttribute("maxlength");
+System.out.println("Max Length: " + value);
+driver.findElement(By.id("Email")).sendKeys("abc@gmail.com");
+driver.findElement(By.id("Mobile")).sendKeys("1234567892");
+Select state = new Select(driver.findElement(By.name("state_id")));// .sendKeys("28697");
+state.selectByValue("28697");
+WebElement cityTemp = driver.findElement(By.name("city_id"));
+while (cityTemp.isEnabled() == false) {
+cityTemp = driver.findElement(By.name("city_id"));
+}
+Select city = new Select(driver.findElement(By.name("city_id"))); // .sendKeys("34411");
+city.selectByVisibleText("Babra");
+driver.findElement(By.id("Agree")).click();
+driver.findElement(By.id("registerBtn")).click();
+
+
+clear
+sendkeys
+click
+isdisplayed
+isenabled
+isselected
+submit
+gettext
+gettagname
+getcssvalue
+getattribute  it is used to obtain the value of an attribute in HTMl Document
+getsize
+getlocation

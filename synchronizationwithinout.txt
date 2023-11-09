@@ -1,0 +1,73 @@
+synchronizationwithinout
+
+package SeleniumPackage;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Timeouts;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.util.Scanner;
+public class MainProgram {
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+System.out.println("Hello");
+System.setProperty("webdriver.chrome.driver", "D:\\ChromeDriver\\chromedriver.exe");
+WebDriver driver = new ChromeDriver();
+//Implicit Wait
+driver.manage().timeouts().implicitlyWait(Duration.ofMinutes(1));
+String url = "https://admissions.ljku.edu.in/";
+//driver.manage().window().maximize();
+Dimension d = driver.manage().window().getSize();
+System.out.println(" Current (Width: "+d.getWidth() + " Height : " + d.getHeight() +")");
+Dimension size = new Dimension(d.width-50,d.height-50);
+driver.manage().window().setSize(size);
+System.out.println("After Setting: width and height : " +driver.manage().window().getSize().toString());
+//Page load time out.
+Timeouts time = driver.manage().timeouts();
+System.out.println("Implicit Pageload Time out : " +time.getImplicitWaitTimeout());
+time.pageLoadTimeout(Duration.ofSeconds(180));
+System.out.println("Explicit Time out : " +time.getPageLoadTimeout());
+driver.get(url);
+WebElement name = driver.findElement(By.id("Name"));
+name.sendKeys("Xyz");
+//name.clear();
+Select state = new Select(driver.findElement(By.name("state_id")));// .sendKeys("28697");
+state.selectByValue("28697");
+WebElement cityTemp = driver.findElement(By.name("city_id"));
+// Explicit wait
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+wait.until(ExpectedConditions.elementToBeClickable(cityTemp));
+Select city = new Select(driver.findElement(By.name("city_id"))); // .sendKeys("34411");
+city.selectByVisibleText("Babra");
+Scanner s = new Scanner(System.in);
+System.out.println("Enter the value of x: ");
+int x = s.nextInt();
+System.out.println("Enter the value of y: ");
+int y = s.nextInt();
+s.close();
+System.out.println("Current Position : "+ driver.manage().window().getPosition().toString());
+//Point p = new Point(50,25);
+Point p = new Point(x,y);
+driver.manage().window().setPosition(p);
+System.out.println("After setting Position : "+ driver.manage().window().getPosition().toString());
+/*System.out.print(name.getText());
+//name.clear();
+String value = name.getAttribute("maxlength");
+System.out.println("Max Length: " + value);
+driver.findElement(By.id("Email")).sendKeys("abc@gmail.com");
+System.out.print("Email set");
+driver.findElement(By.id("Mobile")).sendKeys("1234567892");
+while (cityTemp.isEnabled() == false) {
+cityTemp = driver.findElement(By.name("city_id"));
+}
+// city.wait(1000);
+driver.findElement(By.id("Agree")).click();
+driver.findElement(By.id("registerBtn")).click();*/
+}
+}

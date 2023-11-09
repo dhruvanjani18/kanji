@@ -1,0 +1,62 @@
+pageobjectmodel
+
+// Write a selenium code to test page object model
+// Create a seperate java file in your existing excel data project.Paste the below code and follow the instruction.
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+public class FillDataPageObjetModel {
+WebDriver driver;
+By name = By.id("txtName");
+By city = By.id("txtCity");
+By age = By.id("txtAge");
+By married = By.id("chkMarried");
+By save = By.id("btnSave");
+public FillDataPageObjetModel(WebDriver driver) {
+this.driver = driver;
+}
+public void setName(String name) {
+driver.findElement(this.name).sendKeys(name);
+}
+public void setCity(String city) {
+driver.findElement(this.city).sendKeys(city);
+}
+public void setAge(String age) {
+driver.findElement(this.age).sendKeys(age);
+}
+public void setMarried(Boolean married) {
+if(married)
+driver.findElement(this.married).click();
+}
+public void clickSave()
+{
+driver.findElement(By.id("btnSave")).click();
+}
+public void clearAll() {
+driver.findElement(this.name).clear();
+driver.findElement(this.city).clear();
+driver.findElement(this.age).clear();
+String value = driver.findElement(this.married).getAttribute("cheked");
+if(value != null) {
+driver.findElement(this.married).click();
+}
+}
+}
+// Now in the main method paste the following code.
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+public static void main(String[] args) {
+ChromeOptions options = new ChromeOptions();
+options.addArguments("--remote-allow-origins=*");
+System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
+// TODO Auto-generated method stub
+ChromeDriver driver = new ChromeDriver(options);
+String url = "https://apricot-bendite-7.tiiny.site/";
+driver.get(url);
+FillDataPageObjetModel fdpom = new FillDataPageObjetModel(driver);
+fdpom.setName("Priyadarshi");
+fdpom.setAge("34");
+fdpom.setCity("Ahmedabad");
+fdpom.setMarried(true);
+fdpom.clickSave();
+//driver.quit();
+}
